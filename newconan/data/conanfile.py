@@ -5,7 +5,7 @@ class {project_name}Conan(ConanFile):
   requires = ()
   generators = "cmake"
 
-  default_options = {{}}
+  default_options = {}
 
   def imports(self):
     self.copy("*.dll", dst="bin", src="bin", )
