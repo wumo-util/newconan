@@ -1,0 +1,6 @@
+include newconan/data/.clang-format
+include newconan/data/.gitignore
+include newconan/data/CMakeLists.txt
+include newconan/data/conan.cmake
+include newconan/data/conanfile.py
+include newconan/data/main.cpp
