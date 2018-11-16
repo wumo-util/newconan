@@ -39,6 +39,7 @@ def main():
   copy = lambda content: content
   RMW("CMakeLists.txt", replace)
   RMW("conanfile.py", replace)
+  RMW("CMakeSettings.json", copy)
   RMW(".clang-format", copy)
   RMW(".gitignore", copy)
   cd("src"), RMW("main.cpp", copy)
