@@ -72,7 +72,7 @@ IndentCaseLabels: true
 IndentPPDirectives: None
 IndentWidth:     2
 IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: false
+KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: ''
 MacroBlockEnd:   ''
 MaxEmptyLinesToKeep: 1
@@ -81,13 +81,13 @@ PenaltyBreakAssignment: 10
 PenaltyBreakBeforeFirstCallParameter: 1
 PenaltyBreakComment: 1
 PenaltyBreakFirstLessLess: 2
-PenaltyBreakString: 20
-PenaltyExcessCharacter: 2
-PenaltyReturnTypeOnItsOwnLine: 1
+PenaltyBreakString: 100
+PenaltyExcessCharacter: 1000
+PenaltyReturnTypeOnItsOwnLine: 100
 PointerAlignment: Right
 ReflowComments:  true
 SortIncludes:    false
-SortUsingDeclarations: true
+SortUsingDeclarations: false
 SpaceAfterCStyleCast: false
 SpaceAfterTemplateKeyword: false
 SpaceBeforeAssignmentOperators: true
