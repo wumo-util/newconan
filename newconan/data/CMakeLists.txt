@@ -10,7 +10,7 @@ conan_cmake_run(
     CONANFILE conanfile.py
     BUILD missing)
 
-file(COPY ${CMAKE_SOURCE_DIR}/bin DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_LIST_DIR}/bin DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable({project_name}
     src/main.cpp
