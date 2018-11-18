@@ -1,16 +1,12 @@
-from os import chdir as cd, mkdir
+from os import chdir as cd, mkdir,system
 from os.path import exists, join, dirname
 import argparse
 import re
-from subprocess import check_call
 
 def mkdirs(*dirs):
   for dir in dirs:
     if not exists(dir):
       mkdir(dir)
-
-def run(*args):
-  return check_call(list(args))
 
 data_dir = join(dirname(__file__), "data")
 
@@ -51,7 +47,7 @@ def main():
   RMW("symlink.cmake", copy)
   RMW("symlink.py", copy)
   cd("..")
-  run("git","init")
-  run("git","add",".gitignore")
-  run("git","add","-A")
-  run("git","commit","-m","Initial Commit.")
+  system("git init")
+  system("git add .gitignore")
+  system("git add -A")
+  system('git commit -m "Initial Commit."')
