@@ -51,4 +51,3 @@ def main():
   system("git init")
   system("git add .gitignore")
   system("git add -A")
-  system('git commit -m "Initial Commit."')
