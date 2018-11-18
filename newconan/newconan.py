@@ -40,6 +40,7 @@ def main():
   RMW("CMakeSettings.json", copy)
   RMW(".clang-format", copy)
   RMW(".gitignore", copy)
+  RMW("README.md", replace)
   cd("src")
   RMW("main.cpp", copy)
   cd("../cmake")
