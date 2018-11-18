@@ -4,6 +4,7 @@ project({project_name} LANGUAGES C CXX)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 17)
 
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/conan.cmake)
 conan_cmake_run(
     BASIC_SETUP

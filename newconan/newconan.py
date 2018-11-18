@@ -28,12 +28,14 @@ def main():
                       help="The type of your project, choices are exe(default), static, shared.")
   args = parser.parse_args()
   project_name = args.project_name.strip()
-  project_name = re.sub(r"\s+", "_", project_name)
+  if not re.match(r"[a-zA-Z][a-zA-Z0-9_\-]*", project_name):
+    print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_-]*")
+    return
   project_name = ''.join(x.capitalize() for x in re.split(r"[_\-]+", project_name))
   project_type = args.project_type
   mkdirs(project_name)
   cd(project_name)
-  mkdirs("bin", "cmake", "src", "third_party")
+  mkdirs("assets", "cmake", "src", "third_party")
   
   replace = lambda content: content.replace("{project_name}", project_name)
   copy = lambda content: content
@@ -42,5 +44,9 @@ def main():
   RMW("CMakeSettings.json", copy)
   RMW(".clang-format", copy)
   RMW(".gitignore", copy)
-  cd("src"), RMW("main.cpp", copy)
-  cd("../cmake"), RMW("conan.cmake", copy)
+  cd("src")
+  RMW("main.cpp", copy)
+  cd("../cmake")
+  RMW("conan.cmake", copy)
+  RMW("symlink.cmake", copy)
+  RMW("symlink.py", copy)

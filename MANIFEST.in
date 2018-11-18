@@ -5,3 +5,5 @@ include newconan/data/CMakeSettings.json
 include newconan/data/conan.cmake
 include newconan/data/conanfile.py
 include newconan/data/main.cpp
+include newconan/data/symlink.cmake
+include newconan/data/symlink.py
