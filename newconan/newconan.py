@@ -45,8 +45,6 @@ def main():
   RMW("main.cpp", copy)
   cd("../cmake")
   RMW("conan.cmake", copy)
-  RMW("symlink.cmake", copy)
-  RMW("symlink.py", copy)
   cd("..")
   system("git init")
   system("git add .gitignore")
