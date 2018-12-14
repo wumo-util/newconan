@@ -9,7 +9,8 @@ conan_cmake_run(
     BASIC_SETUP
     CONANFILE conanfile.py
     BUILD missing)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
+execute_process(COMMAND make_directory ${CMAKE_CURRENT_BINARY_DIR}/bin/assets)
+execute_process(COMMAND cmake -E create_symlink ${CMAKE_CURRENT_SOURCE_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/bin/assets)
 
 add_executable({project_name}
     src/main.cpp
