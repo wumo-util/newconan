@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.12)
 project({project_name} LANGUAGES C CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -11,9 +11,8 @@ conan_cmake_run(
     BUILD missing)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
 
-add_executable({project_name}
-    src/main.cpp
-    )
+add_library({project_name} SHARED
+    src/main.cpp)
 
 target_include_directories({project_name} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/src)
@@ -26,3 +25,10 @@ target_link_libraries({project_name}
     $<$<PLATFORM_ID:Linux>:dl>
     $<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
     $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>)
+
+file(GLOB test-sources CONFIGURE_DEPENDS "test/*.cpp")
+foreach (file ${test-sources})
+  get_filename_component(comp ${file} NAME_WE)
+  add_executable(${comp} ${file})
+#  target_link_libraries(${comp} PRIVATE {project_name})
+endforeach ()

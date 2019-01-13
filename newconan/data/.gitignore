@@ -8,8 +8,8 @@
 !/code-style/**
 !/src
 !/src/**
-!/third_party
-!/third_party/**
+!/test
+!/test/**
 
 !/.gitignore
 !/.clang-format

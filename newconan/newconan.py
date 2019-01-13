@@ -31,7 +31,7 @@ def main():
   project_type = args.project_type
   mkdirs(project_name)
   cd(project_name)
-  mkdirs("assets", "cmake", "src", "third_party")
+  mkdirs("assets", "cmake", "src", "test")
   
   replace = lambda content: content.replace("{project_name}", project_name)
   copy = lambda content: content
