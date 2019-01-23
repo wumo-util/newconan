@@ -43,7 +43,7 @@ def main():
   RMW("README.md", replace)
   cd("src")
   RMW("main.cpp", copy)
-  cd("test")
+  cd("../test")
   RMW("test.cpp", copy)
   cd("../cmake")
   RMW("conan.cmake", copy)
