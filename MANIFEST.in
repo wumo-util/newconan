@@ -8,3 +8,4 @@ include newconan/data/main.cpp
 include newconan/data/README.md
 include newconan/data/symlink.cmake
 include newconan/data/symlink.py
+include newconan/data/test.cpp
