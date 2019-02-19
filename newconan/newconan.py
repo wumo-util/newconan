@@ -28,7 +28,7 @@ def regularize(name):
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument("project_name", help="The name of your project.")
-  parser.add_argument("--project_type", choices=["exe", "static", "shared"], default="exe",
+  parser.add_argument("--type", choices=["exe", "static", "shared"], default="exe",
                       help="The type of your project, choices are exe(default), static, shared.")
   args = parser.parse_args()
   project_name = args.project_name.strip()
@@ -36,7 +36,7 @@ def main():
     print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_-]*")
     return
   project_name = ''.join(regularize(x) for x in re.split(r"[_\-]+", project_name))
-  project_type = args.project_type
+  project_type = args.type
   mkdirs(project_name)
   cd(project_name)
   mkdirs("assets", "cmake", "src", "test")
@@ -50,16 +50,27 @@ def main():
   RMW("conanfile.py", replace)
   RMW("CMakeSettings.json", copy)
   RMW(".clang-format", copy)
-  RMW("gitignore", copy,".gitignore")
+  RMW("gitignore", copy, ".gitignore")
   RMW("README.md", replace)
+  
   cd("src")
-  RMW("main.cpp", copy)
+  if project_type == 'exe':
+    RMW("main.cpp", copy)
+  else:
+    RMW("mainlibrary.cpp", copy, "main.cpp")
+    RMW("main.h", copy)
+  
   cd("../test")
-  RMW("test.cpp", copy)
+  if project_type == 'exe':
+    RMW("test.cpp", copy)
+  else:
+    RMW("testLibrary.cpp", copy, "test.cpp")
+  
   cd("../cmake")
   RMW("conan.cmake", copy)
   RMW("symlink.cmake", copy)
   RMW("symlink.py", copy)
+  
   cd("..")
   system("git init")
   system("git add .gitignore")

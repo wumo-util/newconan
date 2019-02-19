@@ -13,6 +13,7 @@ conan_cmake_run(
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
 
 option(BUILD_TEST "Build test" ON)
+
 add_library({project_name} SHARED
     src/main.cpp)
 
@@ -24,9 +25,9 @@ target_compile_definitions({project_name}
 target_link_libraries({project_name}
     PRIVATE
     $<$<PLATFORM_ID:Linux>:dl>
-    ${CONAN_LIBS}
-    $<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
-    $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>)
+    ${CONAN_LIBS})
+    #$<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
+    #$<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>)
 
 if (BUILD_TEST)
     file(GLOB test-sources CONFIGURE_DEPENDS "test/*.cpp")

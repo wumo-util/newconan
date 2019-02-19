@@ -6,7 +6,10 @@ include newconan/data/CMakeSettings.json
 include newconan/data/conan.cmake
 include newconan/data/conanfile.py
 include newconan/data/main.cpp
+include newconan/data/main.h
+include newconan/data/mainlibrary.cpp
 include newconan/data/README.md
 include newconan/data/symlink.cmake
 include newconan/data/symlink.py
 include newconan/data/test.cpp
+include newconan/data/testLibrary.cpp
