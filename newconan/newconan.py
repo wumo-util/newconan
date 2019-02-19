@@ -1,21 +1,29 @@
-from os import chdir as cd, mkdir,system
+from os import chdir as cd, mkdir, system
 from os.path import exists, join, dirname
 import argparse
 import re
+
 
 def mkdirs(*dirs):
   for dir in dirs:
     if not exists(dir):
       mkdir(dir)
 
+
 data_dir = join(dirname(__file__), "data")
 
-def RMW(file, op):
+
+def RMW(file, op, outputFile=None):
   with open(join(data_dir, file), "r") as fin:
     content = fin.read()
   content = op(content)
-  with open(file, "w") as fout:
+  with open(outputFile if outputFile else file, "w") as fout:
     fout.write(content)
+
+
+def regularize(name):
+  return name[0].upper() + name[1:]
+
 
 def main():
   parser = argparse.ArgumentParser()
@@ -27,7 +35,7 @@ def main():
   if not re.match(r"[a-zA-Z][a-zA-Z0-9_\-]*", project_name):
     print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_-]*")
     return
-  project_name = ''.join(x.capitalize() for x in re.split(r"[_\-]+", project_name))
+  project_name = ''.join(regularize(x) for x in re.split(r"[_\-]+", project_name))
   project_type = args.project_type
   mkdirs(project_name)
   cd(project_name)
@@ -35,11 +43,14 @@ def main():
   
   replace = lambda content: content.replace("{project_name}", project_name)
   copy = lambda content: content
-  RMW("CMakeLists.txt", replace)
+  if project_type == 'exe':
+    RMW("ExeCMakeLists.txt", replace, "CMakeLists.txt")
+  else:
+    RMW("LibraryCMakeLists.txt", replace, "CMakeLists.txt")
   RMW("conanfile.py", replace)
   RMW("CMakeSettings.json", copy)
   RMW(".clang-format", copy)
-  RMW(".gitignore", copy)
+  RMW("gitignore", copy,".gitignore")
   RMW("README.md", replace)
   cd("src")
   RMW("main.cpp", copy)
