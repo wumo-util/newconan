@@ -23,9 +23,10 @@ target_compile_definitions({project_name}
     PRIVATE
     $<$<CONFIG:DEBUG>:DEBUG>)
 target_link_libraries({project_name}
+    PUBLIC
+    ${CONAN_LIBS}
     PRIVATE
-    $<$<PLATFORM_ID:Linux>:dl>
-    ${CONAN_LIBS})
+    $<$<PLATFORM_ID:Linux>:dl>)
     #$<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
     #$<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>)
 
