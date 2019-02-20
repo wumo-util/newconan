@@ -1,4 +1,4 @@
-from os import chdir as cd, mkdir, system
+from os import chdir as cd, makedirs, system
 from os.path import exists, join, dirname
 import argparse
 import re
@@ -7,7 +7,7 @@ import re
 def mkdirs(*dirs):
   for dir in dirs:
     if not exists(dir):
-      mkdir(dir)
+      makedirs(dir)
 
 
 data_dir = join(dirname(__file__), "data")
@@ -39,7 +39,7 @@ def main():
   project_type = args.type
   mkdirs(project_name)
   cd(project_name)
-  mkdirs("assets", "cmake", "src", "test")
+  mkdirs(f"assets/public/{project_name}", "cmake", "src", "test")
   
   replace = lambda content: content.replace("{project_name}", project_name)
   copy = lambda content: content

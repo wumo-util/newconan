@@ -5,12 +5,12 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/conan.cmake)
 conan_cmake_run(
     BASIC_SETUP
     CONANFILE conanfile.py
     BUILD missing)
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
 
 option(BUILD_TEST "Build test" ON)
 
@@ -34,6 +34,6 @@ if (BUILD_TEST)
     foreach (file ${test-sources})
       get_filename_component(comp ${file} NAME_WE)
       add_executable(${comp} ${file})
-    target_link_libraries(${comp} PRIVATE {project_name})
+      target_link_libraries(${comp} PRIVATE {project_name})
     endforeach ()
 endif ()
