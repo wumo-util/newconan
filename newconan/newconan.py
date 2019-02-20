@@ -35,7 +35,7 @@ def main():
   if not re.match(r"[a-zA-Z][a-zA-Z0-9_\-]*", project_name):
     print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_-]*")
     return
-  project_name = ''.join(regularize(x) for x in re.split(r"[_\-]+", project_name))
+  # project_name = ''.join(regularize(x) for x in re.split(r"[_\-]+", project_name))
   project_type = args.type
   mkdirs(project_name)
   cd(project_name)

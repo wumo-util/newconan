@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='newconan',
-      version='1.39',
+      version='1.40',
       description='New cmake project based on conan',
       url='https://github.com/wumo/newconan',
       author='wumo',
