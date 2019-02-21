@@ -35,8 +35,8 @@ class {project_name}Conan(ConanFile):
   def package(self):
     self.copy("*.h", dst="include", src=f"{self.name}/src")
     self.copy("*.dll", dst="bin", src="bin", keep_path=False)
-    self.copy("*.so", dst="lib", src="lib", keep_path=False)
-    self.copy("*.dylib", dst="lib", src="lib", keep_path=False)
+    self.copy("*.so", dst="bin", src="bin", keep_path=False)
+    self.copy("*.dylib", dst="bin", src="bin", keep_path=False)
     self.copy("*.a", dst="lib", src="lib", keep_path=False)
     self.copy("*.lib", dst="lib", src="lib", keep_path=False)
     self.copy("*", dst=f"resources/{self.name}", src=f"{self.name}/assets/public/{self.name}")
