@@ -27,8 +27,9 @@ class {project_name}Conan(ConanFile):
     cmake.build()
   
   def imports(self):
-    self.copy("*.dll", dst="bin", src="bin", )
-    self.copy("*.pdb", dst="bin", src="bin", )
+    self.copy("*.dll", dst="bin", src="bin")
+    self.copy("*.so", dst="bin", src="bin")
+    self.copy("*.pdb", dst="bin", src="bin")
     self.copy("*", dst="bin/assets/public", src="resources")
     
   def package(self):
