@@ -50,6 +50,7 @@ def main():
         RMW("LibraryCMakeLists.txt", replace_library_shared, "CMakeLists.txt")
     else:
         raise Exception('Unknown project type! should be one of [exe, static, shared]!')
+    RMW("conanfile.py", replace_project_name)
     RMW("CMakeSettings.json", copy)
     RMW(".clang-format", copy)
     RMW("gitignore", copy, ".gitignore")
