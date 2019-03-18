@@ -1,4 +1,4 @@
-from os import chdir as cd, makedirs, system
+from os import chdir as cd, makedirs, system, getcwd as pwd
 from os.path import exists, join, dirname
 import argparse
 import re
@@ -34,6 +34,7 @@ def main():
     project_type = args.type
     mkdirs(project_name)
     cd(project_name)
+    project_path = pwd()
     mkdirs(f"assets/public/{project_name}", "cmake", "src", "test")
     
     replace_project_name = lambda content: content.replace("{project_name}", project_name)
@@ -78,3 +79,6 @@ def main():
     system("git init")
     system("git add .gitignore")
     system("git add -A")
+    print(f'Created new {project_type}'
+          f'{" " if project_type == "exe" else " library "}project: '
+          f'{project_name} ({project_path})')
