@@ -14,7 +14,7 @@ conan_cmake_run(
 
 option(BUILD_TEST "Build test" ON)
 
-add_library({project_name} SHARED
+add_library({project_name} {library_type}
     src/main.cpp)
 
 target_include_directories({project_name} PUBLIC
