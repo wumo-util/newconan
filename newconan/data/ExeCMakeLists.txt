@@ -23,9 +23,9 @@ target_compile_definitions({project_name}
 target_link_libraries({project_name}
     PUBLIC
     $<$<PLATFORM_ID:Linux>:dl>
-    ${CONAN_LIBS})
-    #$<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
-    #$<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>)
+    ${CONAN_LIBS}
+    $<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
+    $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>)
 
 if (BUILD_TEST)
     file(GLOB test-sources CONFIGURE_DEPENDS "test/*.cpp")
