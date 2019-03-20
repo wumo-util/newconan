@@ -27,7 +27,9 @@ class {project_name}Conan(ConanFile):
     
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin")
+        self.copy("*.dll", dst="bin", src="lib")
         self.copy("*.so", dst="bin", src="bin")
+        self.copy("*.so", dst="bin", src="lib")
         self.copy("*.pdb", dst="bin", src="bin")
         self.copy("*", dst="bin/assets/public", src="resources")
     
