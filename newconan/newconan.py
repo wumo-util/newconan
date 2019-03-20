@@ -35,7 +35,7 @@ def main():
     mkdirs(project_name)
     cd(project_name)
     project_path = pwd()
-    mkdirs(f"assets/public/{project_name}", "cmake", "src", "test")
+    mkdirs("cmake", "src", "test")
     
     replace_project_name = lambda content: content.replace("{project_name}", project_name)
     replace_library_shared = lambda content: content.replace("{project_name}", project_name).replace(
@@ -72,7 +72,7 @@ def main():
     
     cd("../cmake")
     RMW("conan.cmake", copy)
-    RMW("symlink.cmake", copy)
+    RMW("symlink.cmake", replace_project_name)
     RMW("symlink.py", copy)
     
     cd("..")
