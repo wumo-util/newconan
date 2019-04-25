@@ -12,8 +12,10 @@
 !/test/**
 
 !/.gitignore
+!/.gitlab-ci.yml
 !/.clang-format
 
+!/build.py
 !/conanfile.py
 !/CmakeLists.txt
 !/CMakeSettings.json
