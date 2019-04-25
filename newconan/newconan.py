@@ -39,19 +39,21 @@ def main():
     
     replace_project_name = lambda content: content.replace("{project_name}", project_name)
     replace_library_shared = lambda content: content.replace("{project_name}", project_name).replace(
-        "{library_type}", 'SHARED')
+        "{is_shared}", 'True')
     replace_library_static = lambda content: content.replace("{project_name}", project_name).replace(
-        "{library_type}", 'STATIC')
+        "{is_shared}", 'False')
     copy = lambda content: content
     if project_type == 'exe':
+        RMW("conanfile.py", replace_library_static)
         RMW("ExeCMakeLists.txt", replace_project_name, "CMakeLists.txt")
     elif project_type == 'static':
-        RMW("LibraryCMakeLists.txt", replace_library_static, "CMakeLists.txt")
+        RMW("conanfile.py", replace_library_static)
+        RMW("LibraryCMakeLists.txt", replace_project_name, "CMakeLists.txt")
     elif project_type == 'shared':
-        RMW("LibraryCMakeLists.txt", replace_library_shared, "CMakeLists.txt")
+        RMW("conanfile.py", replace_library_shared)
+        RMW("LibraryCMakeLists.txt", replace_project_name, "CMakeLists.txt")
     else:
         raise Exception('Unknown project type! should be one of [exe, static, shared]!')
-    RMW("conanfile.py", replace_project_name)
     RMW("CMakeSettings.json", copy)
     RMW(".clang-format", copy)
     RMW("gitignore", copy, ".gitignore")

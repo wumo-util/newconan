@@ -16,12 +16,13 @@ class {project_name}Conan(ConanFile):
         "shared": [True, False],
     }
     default_options = {
-        "shared": True
+        "shared": {is_shared}
     }
     
     def build(self):
         cmake = CMake(self)
         cmake.definitions["BUILD_TEST"] = False
+        cmake.definitions["BUILD_SHARED"] = self.options.shared
         cmake.configure(source_folder=self.name)
         cmake.build()
     
