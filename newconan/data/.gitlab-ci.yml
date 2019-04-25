@@ -1,0 +1,13 @@
+.build-template: &build-template
+    before_script:
+        - sudo pip install --upgrade conan_package_tools
+        - conan user
+    script:
+        - python build.py
+
+gcc-8:
+    image: conanio/gcc8
+    variables:
+        CONAN_GCC_VERSIONS: "8"
+    <<: *build-template
+

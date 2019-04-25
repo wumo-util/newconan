@@ -1,10 +1,12 @@
 include newconan/data/.clang-format
+include newconan/data/.gitlab-ci.yml
 include newconan/data/gitignore
 include newconan/data/LibraryCMakeLists.txt
 include newconan/data/ExeCMakeLists.txt
 include newconan/data/CMakeSettings.json
 include newconan/data/conan.cmake
 include newconan/data/conanfile.py
+include newconan/data/build.py
 include newconan/data/main.cpp
 include newconan/data/main.h
 include newconan/data/mainlibrary.cpp

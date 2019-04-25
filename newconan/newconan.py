@@ -54,6 +54,8 @@ def main():
         RMW("LibraryCMakeLists.txt", replace_project_name, "CMakeLists.txt")
     else:
         raise Exception('Unknown project type! should be one of [exe, static, shared]!')
+    RMW(".gitlab-ci.yml", copy)
+    RMW("build.py", copy)
     RMW("CMakeSettings.json", copy)
     RMW(".clang-format", copy)
     RMW("gitignore", copy, ".gitignore")
