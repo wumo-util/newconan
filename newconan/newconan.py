@@ -23,15 +23,17 @@ def regularize(name):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("project_name", help="The name of your project.")
-    parser.add_argument("-t", "--type", choices=["exe", "static", "shared"], default="exe",
-                        help="The type of your project, choices are exe(default), static, shared.")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-shared", action='store_true', help="shared library")
+    group.add_argument("-exe", action='store_true', help="executable")
+    group.add_argument("-static", action='store_true', help="static library")
     args = parser.parse_args()
+    if not args.exe and not args.shared and not args.static:
+        args.exe = True
     project_name = args.project_name.strip()
     if not re.match(r"[a-zA-Z][a-zA-Z0-9_\-]*", project_name):
         print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_-]*")
         return
-    # project_name = ''.join(regularize(x) for x in re.split(r"[_\-]+", project_name))
-    project_type = args.type
     mkdirs(project_name)
     cd(project_name)
     project_path = pwd()
@@ -43,13 +45,13 @@ def main():
     replace_library_static = lambda content: content.replace("{project_name}", project_name).replace(
         "{is_shared}", 'False')
     copy = lambda content: content
-    if project_type == 'exe':
+    if args.exe:
         RMW("conanfile.py", replace_library_static)
         RMW("ExeCMakeLists.txt", replace_project_name, "CMakeLists.txt")
-    elif project_type == 'static':
+    elif args.static:
         RMW("conanfile.py", replace_library_static)
         RMW("LibraryCMakeLists.txt", replace_project_name, "CMakeLists.txt")
-    elif project_type == 'shared':
+    elif args.shared:
         RMW("conanfile.py", replace_library_shared)
         RMW("LibraryCMakeLists.txt", replace_project_name, "CMakeLists.txt")
     else:
@@ -62,14 +64,14 @@ def main():
     RMW("README.md", replace_project_name)
     
     cd("src")
-    if project_type == 'exe':
+    if args.exe:
         RMW("main.cpp", copy)
     else:
         RMW("mainlibrary.cpp", copy, "main.cpp")
         RMW("main.h", copy)
     
     cd("../test")
-    if project_type == 'exe':
+    if args.exe:
         RMW("test.cpp", copy)
     else:
         RMW("testLibrary.cpp", copy, "test.cpp")
@@ -83,6 +85,11 @@ def main():
     system("git init")
     system("git add .gitignore")
     system("git add -A")
-    print(f'Created new {project_type}'
-          f'{" " if project_type == "exe" else " library "}project: '
-          f'{project_name} ({project_path})')
+    print(f'Created new ')
+    if args.exe:
+        print("exe")
+    elif args.shared:
+        print("shared library")
+    else:
+        print("static library")
+    print(f' project: {project_name} (located in {project_path})')
