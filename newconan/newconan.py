@@ -85,11 +85,11 @@ def main():
     system("git init")
     system("git add .gitignore")
     system("git add -A")
-    print(f'Created new ')
+    result = 'Created new '
     if args.exe:
-        print("exe")
+        result += "exe"
     elif args.shared:
-        print("shared library")
+        result += "shared library"
     else:
-        print("static library")
-    print(f' project: {project_name} (located in {project_path})')
+        result += "static library"
+    print(f'{result} project: {project_name} (located in {project_path})')
