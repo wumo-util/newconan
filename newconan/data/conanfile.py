@@ -29,8 +29,7 @@ class {project_name}Conan(ConanFile):
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin")
         self.copy("*.dll", dst="bin", src="lib")
-        self.copy("*.so", dst="bin", src="bin")
-        self.copy("*.so", dst="bin", src="lib")
+        self.copy("*.dylib*", dst="bin", src="lib")
         self.copy("*.pdb", dst="bin", src="bin")
         self.copy("*", dst="bin/assets/public", src="resources")
     
@@ -41,6 +40,7 @@ class {project_name}Conan(ConanFile):
         self.copy("*.dylib", dst="bin", src="bin", keep_path=False)
         self.copy("*.a", dst="lib", src="lib", keep_path=False)
         self.copy("*.lib", dst="lib", src="lib", keep_path=False)
+        self.copy("*.so", dst="lib", src="lib", keep_path=False)
         self.copy("*", dst=f"resources/{self.name}", src=f"{self.name}/assets/public/{self.name}")
     
     def package_info(self):
