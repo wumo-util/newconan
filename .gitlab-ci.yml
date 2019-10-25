@@ -2,7 +2,7 @@
     before_script:
         - sudo pip install --upgrade setuptools twine
     script:
-        - python setup.py sdist bdist_wheel
+        - python3 setup.py sdist bdist_wheel
         - twine upload dist/*
 
 gcc-8:
