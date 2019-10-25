@@ -1,6 +1,6 @@
 .build-template: &build-template
     before_script:
-        - sudo pip install --upgrade setuptools twine
+        - sudo pip install --upgrade setuptools twine wheel
     script:
         - python3 setup.py sdist bdist_wheel
         - twine upload dist/*
