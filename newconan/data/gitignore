@@ -17,6 +17,6 @@
 
 !/build.py
 !/conanfile.py
-!/CmakeLists.txt
+!/CMakeLists.txt
 !/CMakeSettings.json
 !/README.md
