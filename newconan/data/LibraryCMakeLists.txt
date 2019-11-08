@@ -34,7 +34,7 @@ target_link_libraries({project_name}
     $<$<PLATFORM_ID:Linux>:dl>)
 
 if (BUILD_TEST)
-    file(GLOB test-sources CONFIGURE_DEPENDS "test/*.cpp")
+    file(GLOB_RECURSE test-sources CONFIGURE_DEPENDS "test/*.cpp")
     foreach (file ${test-sources})
       get_filename_component(comp ${file} NAME_WE)
       add_executable(${comp} ${file})
