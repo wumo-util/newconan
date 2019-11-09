@@ -36,7 +36,7 @@ TestSharedLibrary
 ├── CMakeLists.txt
 ├── CMakeSettings.json
 ├── conanfile.py
-├── README.md
+└── README.md
 ```
 * `newconan` will automatically create the git repository which is `.git` folder.
 * `assets` folder will contains resource files which will be symlink to `${CMAKE_CURRENT_BINARY_DIR}/bin/assets`. In this way, your binary can use the relative path `./assets` to access the resource files.
