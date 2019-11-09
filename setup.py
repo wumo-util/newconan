@@ -1,8 +1,13 @@
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(name='newconan',
-      version='1.75',
+      version='1.76',
       description='New cmake project based on conan',
+      long_description=long_description,
+      long_description_content_type="text/markdown",
       url='https://gitlab.com/wumo/newconan',
       author='wumo',
       license='MIT',
@@ -13,5 +18,6 @@ setup(name='newconan',
       install_requires=[
           'conan'
       ],
+      python_requires='>=3.6',
       include_package_data=True,
       zip_safe=False)
