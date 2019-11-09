@@ -5,7 +5,7 @@
 $ pip install newconan
 ```
 
-## Usage
+## Create Project
 ```shell
 $ newconan TestExe                      # create exe project
 $ newconan TestSharedLibrary -shared    # create shared library project
@@ -48,5 +48,21 @@ TestSharedLibrary
 * `.gitlab-ci.yml` is the default ci configuration for `gitlab`.
 * `build.py` will be used by `gitlab-ci` to build and upload this project as `conan recipe` for others to use your library.
 * `CMakeLists.txt` will define a target for your project and link all the necessary libraries against it. `CMakeLists.txt` also scans `test` folder and create corresponding a test target for each `cpp` file.
+* `CMakeSettings.json` is used by `Visual Studio`. This file will make `Visual Studio` put the `build` folder relative to your project rather than some hashed folder which you can't find easily.
 * `conanfile.py` defines the library dependencies. `conan` will download and compile all the required libraries and copy `*.dll/*.dylib` to `${CMAKE_CURRENT_BINARY_DIR}/bin` folder. At the same time, dependent library resource files will also be copied.
 * `README.md` shows how to build this project using `cmake` and `conan`.
+
+## Add dependency
+You can add library dependencies to your project by modifying the `requires` attribute of `conanfile.py`:
+```python
+class ProjectNameConan(ConanFile):
+    name = "ProjectName"
+    version = "1.0.0"
+    settings = "os", "compiler", "build_type", "arch"
+    requires = ( # Add dependencies here.
+        "library1/1.0.0@conan/stable", 
+        "library2/2.0.0@conan/testing",
+        ...
+    ) 
+```
+And then refresh `cmake`, `conan` will download and compile all the listed dependencies.
