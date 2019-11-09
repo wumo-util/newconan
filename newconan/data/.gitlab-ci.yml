@@ -10,5 +10,7 @@ gcc-9:
     image: conanio/gcc9
     variables:
         CONAN_GCC_VERSIONS: "9"
+    only:
+        - tags # comment this if you want pipelines to run for each commit.
     <<: *build-template
 
