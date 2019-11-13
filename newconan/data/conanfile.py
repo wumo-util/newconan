@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 
 class {project_name}Conan(ConanFile):
     name = "{project_name}"
-    version = "1.0.0"
+    version = "0.0.1"
     settings = "os", "compiler", "build_type", "arch"
     requires = ()
     generators = "cmake"
