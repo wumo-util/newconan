@@ -1,5 +1,7 @@
 *
 
+!/.travis
+!/.travis/**
 !/assets
 !/assets/**
 !/cmake
@@ -13,6 +15,9 @@
 
 !/.gitignore
 !/.gitlab-ci.yml
+!/.travis.yml
+!/appveyor.yml
+
 !/.clang-format
 
 !/build.py
