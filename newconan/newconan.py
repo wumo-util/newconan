@@ -57,6 +57,11 @@ def main():
     else:
         raise Exception('Unknown project type! should be one of [exe, static, shared]!')
     RMW(".gitlab-ci.yml", copy)
+    RMW("appveyor.yml", copy)
+    RMW(".travis.yml", copy)
+    mkdirs(".travis")
+    RMW(".travis/install.sh", copy)
+    RMW(".travis/run.sh", copy)
     RMW("build.py", copy)
     RMW("CMakeSettings.json", copy)
     RMW(".clang-format", copy)

@@ -1,5 +1,9 @@
 include newconan/data/.clang-format
 include newconan/data/.gitlab-ci.yml
+include newconan/data/.travis.yml
+include newconan/data/.travis/install.sh
+include newconan/data/.travis/run.sh
+include newconan/data/appveyor.yml
 include newconan/data/gitignore
 include newconan/data/LibraryCMakeLists.txt
 include newconan/data/ExeCMakeLists.txt

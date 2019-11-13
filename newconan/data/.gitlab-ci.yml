@@ -1,10 +1,25 @@
+#variables:
+#    CONAN_USERNAME: "user"
+#    CONAN_REFERENCE: "TestConan/0.0.1"
+#    CONAN_CHANNEL: "channel"
+#    CONAN_LOGIN_USERNAME: "user"
+
 .build-template: &build-template
     before_script:
         - git reset --hard HEAD
-        - sudo pip install --upgrade conan_package_tools
+        - sudo pip install conan --upgrade
+        - sudo pip install conan_package_tools --upgrade
         - conan user
     script:
         - python build.py
+
+#gcc-8:
+#    image: conanio/gcc8
+#    variables:
+#        CONAN_GCC_VERSIONS: "8"
+#    only:
+#        - tags # comment this if you want pipelines to run for each commit.
+#    <<: *build-template
 
 gcc-9:
     image: conanio/gcc9
