@@ -42,7 +42,7 @@ class {project_name}Conan(ConanFile):
         self.copy("*.a", dst="lib", src="lib", keep_path=False)
         self.copy("*.lib", dst="lib", src="lib", keep_path=False)
         self.copy("*", dst=f"resources/{self.name}",
-                  src=f"bin/assets/public/{self.name}", symlinks=True)
+                  src=f"{self.name}/assets/public/{self.name}")
     
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
