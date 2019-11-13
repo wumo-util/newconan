@@ -17,6 +17,9 @@ $ newconan TestStaticLibrary -static    # create static library project
 ```
 TestSharedLibrary
 ├── .git
+├── .travis
+│   ├── install.sh
+│   └── run.sh
 ├── assets
 │   └── public
 │       └── TestSharedLibrary
@@ -32,6 +35,8 @@ TestSharedLibrary
 ├── .clang-format
 ├── .gitignore
 ├── .gitlab-ci.yml
+├── .travis.yml
+├── appveyor.yml
 ├── build.py
 ├── CMakeLists.txt
 ├── CMakeSettings.json
@@ -46,6 +51,8 @@ TestSharedLibrary
 * `.clang-format` is the default format that `clang-format` will use.
 * `.gitignore` ignores everything except exisiting folders and files. You can edit this file to add other folders to git.
 * `.gitlab-ci.yml` is the default ci configuration for `gitlab`.
+* `.travis.yml` and folder `.travis` is the default ci configuration for `travis`.
+* `appveyor.yml` is the default ci configuration for `appveyor`.
 * `build.py` will be used by `gitlab-ci` to build and upload this project as `conan recipe` for others to use your library.
 * `CMakeLists.txt` will define a target for your project and link all the necessary libraries against it. `CMakeLists.txt` also scans `test` folder and create corresponding a test target for each `cpp` file.
 * `CMakeSettings.json` is used by `Visual Studio`. This file will make `Visual Studio` put the `build` folder relative to your project rather than some hashed folder which you can't find easily.
