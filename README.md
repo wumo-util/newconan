@@ -1,5 +1,9 @@
 `newconan` creates default project structure that is convenient for developing in IDEs like Clion and Visual Studio.<!--more-->
 
+## Requirements
+
+`cmake` >= 3.14 
+
 ## Installation
 ```shell
 $ pip install newconan
