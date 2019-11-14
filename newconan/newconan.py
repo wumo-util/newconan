@@ -83,8 +83,6 @@ def main():
     
     cd("../cmake")
     RMW("conan.cmake", copy)
-    RMW("symlink.cmake", replace_project_name)
-    RMW("symlink.py", copy)
     
     cd("..")
     system("git init")
