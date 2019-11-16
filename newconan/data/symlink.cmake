@@ -1,5 +1,8 @@
 find_package (Python)
-execute_process(COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/symlink.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets/public/{project_name}
-    ${CMAKE_CURRENT_BINARY_DIR}/bin/assets)
+
+function(symlink src dst)
+  execute_process(COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/symlink.py
+    "${CMAKE_CURRENT_SOURCE_DIR}/${src}"
+    "${CMAKE_CURRENT_BINARY_DIR}/${dst}")
+endfunction()
+
