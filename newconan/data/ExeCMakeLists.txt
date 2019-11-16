@@ -6,10 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/symlink.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/symlink.cmake)
 symlink(assets bin/assets)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/assets/public/{project_name})
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/conan.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/conan.cmake)
 conan_cmake_run(
     BASIC_SETUP
     CONANFILE conanfile.py
