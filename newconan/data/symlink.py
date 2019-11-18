@@ -2,11 +2,10 @@ import os, sys, platform
 from os.path import join, abspath
 import pathlib
 
-_, assetsDir, assetsPublicDir, binAssetsDir = sys.argv
+_, assetsDir, binAssetsDir = sys.argv
 try:
     binDir = abspath(join(binAssetsDir, os.pardir))
     pathlib.Path(assetsDir).mkdir(parents=True, exist_ok=True)
-    pathlib.Path(assetsPublicDir).mkdir(parents=True, exist_ok=True)
     pathlib.Path(binDir).mkdir(parents=True, exist_ok=True)
     if platform.system() == 'Windows':
         import _winapi

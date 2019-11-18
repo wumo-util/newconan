@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='newconan',
-      version='1.92',
+      version='1.94',
       description='New cmake project based on conan',
       long_description=long_description,
       long_description_content_type="text/markdown",
