@@ -1,10 +1,10 @@
 from setuptools import setup
 
-with open("README.md", "r") as fh:
+with open("README.md", encoding='utf-8', mode='r') as fh:
     long_description = fh.read()
 
 setup(name='newconan',
-      version='1.95',
+      version='1.96',
       description='New cmake project based on conan',
       long_description=long_description,
       long_description_content_type="text/markdown",
