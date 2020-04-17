@@ -8,6 +8,8 @@
 !/cmake/**
 !/code-style
 !/code-style/**
+!/.github
+!/.github/**
 !/src
 !/src/**
 !/test
