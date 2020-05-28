@@ -65,8 +65,7 @@ def main():
     
     create_assets = f'''
 include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/symlink.cmake)
-symlink(assets bin/assets)
-file(MAKE_DIRECTORY ${{CMAKE_CURRENT_SOURCE_DIR}}/assets/public/{project_name})'''
+symlink(assets bin/assets)'''
     
     create_library = f'''
 if (BUILD_SHARED)
@@ -133,13 +132,6 @@ target_link_libraries({project_name}
         RMW("conanfile.py", replace_library_shared)
     else:
         raise Exception('Unknown project type! should be one of [exe, static, shared]!')
-    if not args.noci:
-        RMW(".gitlab-ci.yml", copy)
-        RMW("appveyor.yml", copy)
-        RMW(".travis.yml", copy)
-        mkdirs(".travis")
-        RMW(".travis/install.sh", copy)
-        RMW(".travis/run.sh", copy)
     RMW("build.py", copy)
     RMW("CMakeSettings.json", copy)
     RMW(".clang-format", copy)
