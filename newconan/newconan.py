@@ -33,16 +33,16 @@ def main():
     group.add_argument("-exe", action='store_true', help="executable")
     group.add_argument("-static", action='store_true', help="static library")
     
-    parser.add_argument("-noci", action='store_true', help="no ci")
+    parser.add_argument("-ci", action='store_true', help="ci, gitlab,travis,appveyor etc.")
     parser.add_argument("-noassets", action='store_true', help="don't create assets")
     parser.add_argument("-notest", action='store_true', help="don't create test")
-    parser.add_argument("-basic", action='store_true', help="-noci -noassets -notest")
+    parser.add_argument("-basic", action='store_true', help="-noassets -notest")
     
     args = parser.parse_args()
     if not args.exe and not args.shared and not args.static:
         args.exe = True
     if args.basic:
-        args.noci = True
+        args.ci = False
         args.noassets = True
         args.notest = True
     
@@ -63,53 +63,55 @@ def main():
         "{is_shared}", 'False')
     copy = lambda content: content
     
-    create_assets = f'''
-include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/symlink.cmake)
-symlink(assets bin/assets)'''
-    
-    create_library = f'''
-if (BUILD_SHARED)
-    add_library({project_name} SHARED ${{sources}})
-else()
-    add_library({project_name} STATIC ${{sources}})
-endif()'''
-    
-    link_std = '''
-    $<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
-    $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>'''
-    
-    build_test = f'''
-if (BUILD_TEST)
-    file(GLOB_RECURSE test-sources CONFIGURE_DEPENDS "test/*.cpp")
-    foreach (file ${{test-sources}})
-      get_filename_component(comp ${{file}} NAME_WE)
-      add_executable(${{comp}} ${{file}})
-      target_include_directories(${{comp}} PUBLIC
-        ${{CMAKE_CURRENT_LIST_DIR}}/test)
-      target_link_libraries(${{comp}} PRIVATE {'${CONAN_LIBS}' if args.exe else project_name})
-    endforeach ()
-endif ()
-    '''
-    
-    content = f'''
-cmake_minimum_required(VERSION 3.12)
+    cmakelists = f'''cmake_minimum_required(VERSION 3.12)
 project({project_name} LANGUAGES C CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-{'set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)' if args.shared else ""}
-{create_assets if not args.noassets else ''}
-include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/conan.cmake)
+'''
+    if args.shared:
+        cmakelists += 'set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)\n'
+    
+    cmakelists += '\n'
+    
+    if not args.noassets:
+        cmakelists += f'''include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/symlink.cmake)
+symlink(assets bin/assets)
+'''
+    cmakelists += '\n'
+    
+    cmakelists += '''include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/conan.cmake)
 conan_cmake_run(BASIC_SETUP CONANFILE conanfile.py BUILD missing)
-{'option(BUILD_TEST "Build test" ON)' if not args.notest else ''}
-{'option(BUILD_SHARED "Build shared lib" ON)' if not args.exe else ''}
-set(sources src/main.cpp)
-{f'add_executable({project_name} ${{sources}})' if args.exe else ''}
-{create_library if not args.exe else ''}
 
-target_include_directories({project_name} PUBLIC
+'''
+    if not args.notest:
+        cmakelists += 'option(BUILD_TEST "Build test" ON)\n'
+    
+    if not args.exe:
+        cmakelists += 'option(BUILD_SHARED "Build shared lib" ON)\n'
+    
+    cmakelists += '\n'
+    
+    if not args.exe:
+        cmakelists += 'set(headers src/main.h)\n'
+    
+    cmakelists += 'set(sources src/main.cpp)\n\n'
+    
+    if args.exe:
+        cmakelists += f'add_executable({project_name} ${{sources}})\n\n'
+    else:
+        cmakelists += f'''if (BUILD_SHARED)
+    add_library({project_name} SHARED ${{sources}})
+else()
+    add_library({project_name} STATIC ${{sources}})
+endif()
+
+set_target_properties({project_name} PROPERTIES PUBLIC_HEADER "${{headers}}")
+'''
+    
+    cmakelists += f'''target_include_directories({project_name} PUBLIC
     ${{CMAKE_CURRENT_LIST_DIR}}/src)
 target_compile_definitions({project_name}
     PRIVATE
@@ -118,12 +120,29 @@ target_link_libraries({project_name}
     PUBLIC
     ${{CONAN_LIBS}}
     $<$<PLATFORM_ID:Linux>:dl>
-{link_std if not args.exe else ''}
-)
-{build_test if not args.notest else ''}
-    '''
+'''
     
-    W(content, 'CMakeLists.txt')
+    if not args.exe:
+        cmakelists += '''    $<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
+    $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>
+'''
+    
+    cmakelists += f'''    )
+install(TARGETS {project_name})
+
+if (BUILD_TEST)
+    file(GLOB_RECURSE test-sources CONFIGURE_DEPENDS "test/*.cpp")
+    foreach (file ${{test-sources}})
+        get_filename_component(comp ${{file}} NAME_WE)
+        add_executable(${{comp}} ${{file}})
+        target_include_directories(${{comp}} PUBLIC
+            ${{CMAKE_CURRENT_LIST_DIR}}/test)
+        target_link_libraries(${{comp}} PRIVATE {'${CONAN_LIBS}' if args.exe else project_name})
+    endforeach ()
+endif ()
+'''
+    
+    W(cmakelists, 'CMakeLists.txt')
     if args.exe:
         RMW("conanfile.py", replace_library_static)
     elif args.static:

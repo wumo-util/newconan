@@ -2,14 +2,14 @@
 
 !/.travis
 !/.travis/**
+!/.github
+!/.github/**
 !/assets
 !/assets/**
 !/cmake
 !/cmake/**
 !/code-style
 !/code-style/**
-!/.github
-!/.github/**
 !/src
 !/src/**
 !/test
