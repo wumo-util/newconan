@@ -77,12 +77,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
     cmakelists += '\n'
     
     if not args.noassets:
-        cmakelists += f'''include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/symlink.cmake)
+        cmakelists += f'''include(${{CMAKE_CURRENT_LIST_DIR}}/cmake/symlink.cmake)
 symlink(assets bin/assets)
 '''
     cmakelists += '\n'
     
-    cmakelists += '''include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/conan.cmake)
+    cmakelists += '''include(${CMAKE_CURRENT_LIST_DIR}/cmake/conan.cmake)
 conan_cmake_run(BASIC_SETUP CONANFILE conanfile.py BUILD missing)
 
 '''
