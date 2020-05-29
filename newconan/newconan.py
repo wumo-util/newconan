@@ -47,8 +47,8 @@ def main():
         args.notest = True
     
     project_name = args.project_name.strip()
-    if not re.match(r"[a-zA-Z][a-zA-Z0-9_\-]*", project_name):
-        print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_-]*")
+    if not re.match(r"[a-zA-Z][a-zA-Z0-9_]*", project_name):
+        print("Invalid project name! name pattern: [a-zA-Z][a-zA-Z0-9_]*")
         return
     mkdirs(project_name)
     cd(project_name)
@@ -94,27 +94,23 @@ conan_cmake_run(BASIC_SETUP CONANFILE conanfile.py BUILD missing)
     
     cmakelists += '\n'
     
-    if not args.exe:
-        cmakelists += 'set(headers src/main.h)\n'
-    
-    cmakelists += 'set(sources src/main.cpp)\n\n'
+    cmakelists += f'set(sources src/{project_name}/main.cpp)\n\n'
     
     if args.exe:
-        cmakelists += f'add_executable({project_name} ${{sources}})\n\n'
+        cmakelists += f'add_executable({project_name} ${{sources}})\n'
     else:
         cmakelists += f'''if (BUILD_SHARED)
     add_library({project_name} SHARED ${{sources}})
 else()
     add_library({project_name} STATIC ${{sources}})
 endif()
-
-set_target_properties({project_name} PROPERTIES PUBLIC_HEADER "${{headers}}")
 '''
+
+    cmakelists += '\n'
     
     cmakelists += f'''target_include_directories({project_name} PUBLIC
     ${{CMAKE_CURRENT_LIST_DIR}}/src)
-target_compile_definitions({project_name}
-    PRIVATE
+target_compile_definitions({project_name} PRIVATE
     $<$<CONFIG:DEBUG>:DEBUG>)
 target_link_libraries({project_name}
     PUBLIC
@@ -158,20 +154,24 @@ endif ()
     RMW("README.md", replace_project_name)
     
     cd("src")
+    mkdirs(project_name)
+    cd(project_name)
     if args.exe:
         RMW("main.cpp", copy)
     else:
         RMW("mainlibrary.cpp", copy, "main.cpp")
         RMW("main.h", copy)
+    cd('../..')
     
     if not args.notest:
-        cd("../test")
+        cd("test")
         if args.exe:
             RMW("test.cpp", copy)
         else:
-            RMW("testLibrary.cpp", copy, "test.cpp")
+            RMW("testLibrary.cpp", replace_project_name, "test.cpp")
+        cd('..')
     
-    cd("../cmake")
+    cd("cmake")
     RMW("conan.cmake", copy)
     if not args.noassets:
         RMW("symlink.cmake", replace_project_name)

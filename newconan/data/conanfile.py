@@ -39,6 +39,8 @@ class {project_name}Conan(ConanFile):
     def package(self):
         cmake = self.configure_cmake()
         cmake.install()
+        self.copy("*.h", dst="include", src=f"{self.name}/src")
+        self.copy("*.hpp", dst="include", src=f"{self.name}/src")
     
     def package_info(self):
         self.cpp_info.libs = tools.collect_libs(self)
