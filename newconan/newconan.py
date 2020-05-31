@@ -33,7 +33,7 @@ def main():
     group.add_argument("-exe", action='store_true', help="executable")
     group.add_argument("-static", action='store_true', help="static library")
     
-    parser.add_argument("-ci", action='store_true', help="ci, gitlab,travis,appveyor etc.")
+    parser.add_argument("-github", action='store_true', help="ci, github")
     parser.add_argument("-noassets", action='store_true', help="don't create assets")
     parser.add_argument("-notest", action='store_true', help="don't create test")
     parser.add_argument("-basic", action='store_true', help="-noassets -notest")
@@ -105,7 +105,7 @@ else()
     add_library({project_name} STATIC ${{sources}})
 endif()
 '''
-
+    
     cmakelists += '\n'
     
     cmakelists += f'''target_include_directories({project_name} PUBLIC
@@ -178,6 +178,11 @@ endif ()
         RMW("symlink.py", copy)
     
     cd("..")
+    
+    if args.github:
+        mkdirs(".github/workflows")
+        RMW("export.yml", copy, ".github/workflows/export.yml")
+    
     system("git init")
     system("git add .gitignore")
     system("git add -A")
