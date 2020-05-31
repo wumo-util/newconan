@@ -9,7 +9,7 @@ on:
 
 jobs:
   export:
-    if: contains(github.event.head_commit.message, 'release plz')
+    if: startsWith(github.event.head_commit.message, 'release plz')
     runs-on: ubuntu-latest
 
     steps:
