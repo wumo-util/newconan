@@ -1,5 +1,6 @@
 from conans import ConanFile, CMake, tools
 
+
 class {project_name}Conan(ConanFile):
     name = "{project_name}"
     version = "0.0.1"
