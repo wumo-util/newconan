@@ -6,8 +6,6 @@ include newconan/data/.travis/run.sh
 include newconan/data/appveyor.yml
 include newconan/data/export.yml
 include newconan/data/gitignore
-include newconan/data/LibraryCMakeLists.txt
-include newconan/data/ExeCMakeLists.txt
 include newconan/data/CMakeSettings.json
 include newconan/data/conan.cmake
 include newconan/data/conanfile.py

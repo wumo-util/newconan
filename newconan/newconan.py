@@ -119,8 +119,7 @@ target_link_libraries({project_name}
 '''
     
     if not args.exe:
-        cmakelists += '''    $<$<CXX_COMPILER_ID:GNU>:-static-libgcc>
-    $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>
+        cmakelists += '''    $<$<CXX_COMPILER_ID:GNU>:-static-libstdc++>
 '''
     
     cmakelists += f'''    )
