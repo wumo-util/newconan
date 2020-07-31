@@ -70,9 +70,8 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 '''
-    if args.shared:
-        cmakelists += 'set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)\n'
     
     cmakelists += '\n'
     
